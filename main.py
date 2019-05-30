@@ -6,18 +6,24 @@ import copy
 import sys
 
 def main(argv):
+	player = 1
 	board = utils.create_board()
+
 	print("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 	print("| Current board")
 	utils.show_board(board)
+	print()
 
-	player = -1
-	root = node.Node(-1, board, 0, -1*player, 0)
+	root = node.Node(-1, board, 0, -1*player, 0, 0)
 
 	score = minimax.minimax(copy.copy(root), player)
-	print("\nScore: " + str(score))
 
-	nodes = [root]
+	if score in [-1, 1]:	
+		print("X ganhou o jogo") if score == 1 else print("O ganhou o jogo")
+		return
+
+	print("Score: " + str(score))
+
 	lowers = root.get_lowers()
 	best_score = lowers[0].get_score()
 	move = lowers[0].get_move()
@@ -33,7 +39,7 @@ def main(argv):
 				move = lower.get_move()
 	print("Best move: " + str(move))
 
-	#utils.show_tree(nodes)
+	#utils.show_tree([root])
 
 if __name__ == "__main__":
     main(sys.argv)

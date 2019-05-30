@@ -3,6 +3,23 @@ import numpy as np
 import copy
 import node
 
+
+def create_board():
+	board = np.zeros((3,3))
+
+	board[0][0] = 0
+	board[0][1] = 0
+	board[0][2] = 0
+	board[1][0] = 0
+	board[1][1] = 0
+	board[1][2] = 0
+	board[2][0] = 0
+	board[2][1] = 0
+	board[2][2] = 0
+
+	return board
+
+
 def get_available_moves(board):
 	moves = []
 	for i in range(0,len(board)):
@@ -19,7 +36,26 @@ def perform_move(board, move, player):
 	return board
 
 
-def calculate_score(board):
+def calculate_score(board, player):
+	win_states = [
+		[board[0][0], board[0][1], board[0][2]],
+		[board[1][0], board[1][1], board[1][2]],
+		[board[2][0], board[2][1], board[2][2]],
+		[board[0][0], board[1][0], board[2][0]],
+		[board[0][1], board[1][1], board[2][1]],
+		[board[0][2], board[1][2], board[2][2]],
+		[board[0][0], board[1][1], board[2][2]],
+		[board[2][0], board[1][1], board[0][2]],
+	]
+	if [player, player, player] in win_states:
+		return player
+	elif (len(get_available_moves(board)) == 0):
+		return 0
+	else:
+		return -2
+
+
+def calculate_score2(board, player):
 	if(board[0][0] == board[1][0] == board[2][0]):
 		# print('yeah')
 		if(board[0][0] != 0):
@@ -65,21 +101,6 @@ def calculate_score(board):
 		
 	return -2 # If there is no winning condition, return a specific score
 
-
-def create_board():
-	board = np.zeros((3,3))
-
-	board[0][0] = 1
-	board[0][1] = 0
-	board[0][2] = -1
-	board[1][0] = 0
-	board[1][1] = 0
-	board[1][2] = 1
-	board[2][0] = 1
-	board[2][1] = 0
-	board[2][2] = -1
-
-	return board
 
 def show_tree(nodes):
 	while(len(nodes) > 0):
