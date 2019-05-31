@@ -1,45 +1,43 @@
-import minimax
-import numpy as np
-import utils
-import node
-import copy
+import os
 import sys
+import copy
+import node
+import utils
+import minimax
+import game
+import random
 
 def main(argv):
-	player = 1
+	os.system("clear")
 	board = utils.create_board()
+	print("Player 1 or 2?: ", end='')
+	player = input()
+	player = 1 if (player == "1") else -1
 
-	print("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
-	print("| Current board")
+	if player == -1:
+		moves = utils.get_available_moves(board)
+		random_move = random.randint(0, len(moves))
+		board = utils.perform_move(board, moves[random_move], -1*player)
+
+	end_score, board = game.game(player, board)
+
+	os.system('clear')
 	utils.show_board(board)
 	print()
-
-	root = node.Node(-1, board, 0, -1*player, 0, 0)
-
-	score = minimax.minimax(copy.copy(root), player)
-
-	if score in [-1, 1]:	
-		print("X ganhou o jogo") if score == 1 else print("O ganhou o jogo")
-		return
-
-	print("Score: " + str(score))
-
-	lowers = root.get_lowers()
-	best_score = lowers[0].get_score()
-	move = lowers[0].get_move()
-
-	for lower in lowers:
-		if player == 1:
-			if(lower.get_score() > best_score):
-				best_score = lower.get_score()
-				move = lower.get_move()
+	if end_score == 0:
+		print("O jogo empatou")
+	elif player == 1:
+		if end_score == -1:
+			print("Você perdeu o jogo")
 		else:
-			if(lower.get_score() < best_score):
-				best_score = lower.get_score()
-				move = lower.get_move()
-	print("Best move: " + str(move))
-
-	#utils.show_tree([root])
+			print("Você ganhou o jogo")
+	elif player == -1:
+		if end_score == -1:
+			print("Você ganhou o jogo")
+		else:
+			print("Você perdeu o jogo")
+		
+	return
 
 if __name__ == "__main__":
     main(sys.argv)

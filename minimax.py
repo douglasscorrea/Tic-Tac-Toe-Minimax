@@ -1,8 +1,6 @@
-import utils
-import node
 import copy
-import sys
-import numpy as np
+import node
+import utils
 
 
 def minimax(curr_node, player):
@@ -20,8 +18,6 @@ def minimax(curr_node, player):
 		id += 1
 		new_board = utils.perform_move(copy.copy(curr_node.get_board()), move, player)
 		new_node = node.Node(curr_node, new_board, curr_node.get_depth() + 1, player, move, id)
-		new_node.set_id(id)
-
 		curr_node.add_lower(new_node)
 
 		move_score = minimax(new_node, -1*player)
