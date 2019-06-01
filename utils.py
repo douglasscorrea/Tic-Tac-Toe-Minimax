@@ -82,7 +82,7 @@ def show_tree(nodes):
 		print('| score: ' + str(node.get_score()))
 		print('| player: ' + str(node.get_last_player()))
 		print('| move: ' + str(node.get_move()))
-		show_board(node.get_board())
+		show_board(node.get_board(), file)
 		print()
 
 		new_nodes = node.get_lowers()
@@ -92,6 +92,7 @@ def show_tree(nodes):
 
 def show_board(board):
 	i = 0
+
 	print("|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 	print("| Current board")
 	print("|     0  1  2") 

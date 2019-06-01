@@ -9,11 +9,11 @@ def game(player, board):
     score = -2
 
     while utils.verify_end_game(board, player) not in [-1, 1]:
-        #os.system('clear')
+        os.system('clear')
         utils.show_board(board)
         print()
 
-        print("Choose your move [x,y]: ", end='')
+        print("Choose your move [row,column]: ", end='')
         move = input()
 
         while utils.verify_move(board, move.split(",")) == False:
@@ -23,6 +23,9 @@ def game(player, board):
         board = utils.perform_move(board, move.split(","), player)
         root = node.Node(-1, board, 0, -1*player, 0, 0)
         score = minimax.minimax(copy.copy(root), -1*player)
+
+        while utils.verify_end_game(board, player) in [-1, 0, 1]:
+            return score, board
 
         lowers = root.get_lowers()
         best_score = lowers[0].get_score()
@@ -40,5 +43,8 @@ def game(player, board):
         
         board = utils.perform_move(board, move, -1*player)
 
+        while utils.verify_end_game(board, player) in [-1, 0, 1]:
+            return score, board
+        #utils.show_tree([root])
+
     return score, board
-    #utils.show_tree([root])

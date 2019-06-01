@@ -25,17 +25,17 @@ def main(argv):
 	utils.show_board(board)
 	print()
 	if end_score == 0:
-		print("O jogo empatou")
+		print("Tied game")
 	elif player == 1:
 		if end_score == -1:
-			print("Você perdeu o jogo")
+			print("You lose")
 		else:
-			print("Você ganhou o jogo")
+			print("You win")
 	elif player == -1:
 		if end_score == -1:
-			print("Você ganhou o jogo")
+			print("You win")
 		else:
-			print("Você perdeu o jogo")
+			print("You lose")
 		
 	return
 
